@@ -54,8 +54,8 @@ The system reduces human error, ensures consistency across environments, and inc
 ### Setup
 ```bash
 # Clone the repository
-git clone https://github.com/ioanapetrea12/update-rsr.git
-cd update_rsr
+git clone https://github.com/ioanapetrea12/update-app.git
+cd update_app
 
 # Install dependencies for the update app
 cd update_app
