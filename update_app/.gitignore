@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Build artifacts (PyInstaller, dist)
+build/
+dist/
+*.spec
+*.exe
+*.dll
+
+# Logs
+logs/
+*.log
+
+# Config files
+# (keep JSON configs, only ignore sensitive .ini)
+*.ini
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp

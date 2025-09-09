@@ -1,0 +1,5 @@
+{
+    "Produse": {
+      "exclude_files": ["setari.config", "conexiune.config"]
+    }
+}

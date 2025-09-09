@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>RSR Update</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <section id="update-section">
+    <h2>Actualizare Aplicații</h2>
+
+    <p id="tip_server_info" style="font-style: italic; color: gray; margin-top: -10px; margin-bottom: 10px;"></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Aplicație</th>
+          <th>Actualizează?</th>
+          <th>Script SQL</th>
+          <th>Surse</th>
+          <th>Rapoarte</th>
+        </tr>
+      </thead>
+      <tbody id="tabel">
+        <tr><td colspan="5">Se încarcă...</td></tr>
+      </tbody>
+    </table>
+    <div id="versiune"></div>
+    <button id="btn_verifica_update">Verificare servere</button>
+    <button id="btn_test" disabled>Test pe server deploy</button>
+    <button id="btn_update" disabled>Actualizare în producție</button>
+    <button id="btn_debug_zipuri">Debug zip-uri</button>
+  </section>
+
+  <section id="server-section">
+    <h2>Status Servere</h2>
+
+    <h3>Server Deploy-Test</h3>
+    <table id="server-table-deploy-test">
+      <thead>
+        <tr>
+          <th>Server Deploy Test</th>
+          <th>Ping</th>
+          <th>Application Pool</th>
+          <th>SQL Server</th>
+        </tr>
+      </thead>
+      <tbody id="server-tbody-deploy-test">
+        <tr><td colspan="4">Se încarcă statusul serverului de test...</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Servere Producție</h3>
+    <table id="server-table-producție">
+      <thead>
+        <tr>
+          <th>Server Producție</th>
+          <th>Ping</th>
+          <th>Application Pool</th>
+          <th>SQL Server</th>
+        </tr>
+      </thead>
+      <tbody id="server-tbody-producție">
+        <tr><td colspan="4">Se încarcă statusurile serverelor de producție...</td></tr>
+      </tbody>
+    </table>
+
+    <button id="btn_export_pdf" style="display: none;" onclick="exportToPDF()">Export PDF</button>
+    <!--<p id="countdown_timer" style="margin-top: 10px; font-style: italic; color: gray;">Următoarea actualizare în: 10 secunde</p>-->
+  </section>
+
+  <section id="rollback-section">
+    <h2>Rollback</h2>
+    <label for="rollback_app">Aplicație:</label>
+    <select id="rollback_app">
+      <option value="">Selectează aplicația</option>
+      <option value="Produse">Produse</option>
+      <!--<option value="SimecAero">SimecAero</option>-->
+    </select>
+    <!--<label for="rollback_timestamp">Timestamp Backup:</label>
+    <input type="text" id="rollback_timestamp" placeholder="YYYYMMDD_HHMMSS">-->
+    <button id="btn_rollback" disabled>Execută Rollback</button>
+    <!-- Progress bar rollback -->
+    <div id="rollback-progress-container" style="display: none; margin-top: 10px;">
+      <label>Rollback în curs...</label>
+      <div style="background-color: #eee; height: 20px; width: 100%; border-radius: 4px;">
+        <div id="rollback-progress-bar" style="height: 100%; width: 0%; background-color: #e67e22; transition: width 0.4s; border-radius: 4px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="status"></div>
+  <div id="update_progress_container">
+    <h3>Progres actualizare</h3>
+    <ul id="update_progress_list" style="font-family: monospace; padding-left: 20px;"></ul>
+  </div>
+
+  <p id="mesaj_progres" style="color: gray; font-style: italic; margin-top: -10px;">
+    Procesul poate dura câteva secunde...
+  </p>
+  <!-- progress bar -->
+  <div id="progress-container" style="width: 100%; background: #ddd; height: 20px; display: none; margin-top: 10px;">
+    <div id="progress-bar" style="height: 100%; width: 0%; background: #3498db; transition: width 0.3s;"></div>
+  </div>
+
+  <p id="polling_info" style="color: blue; font-style: italic;"></p>
+  <p id="status_mesaj" style="font-weight: bold; color: green;"></p>
+  <pre id="debug_output"></pre>
+
+</script>
+  <script type="module" src="/static/script.js"></script>
+  <script type="module">
+    import { verificaServereUpdate } from '/static/verificaServere.js';
+    document.getElementById('btn_verifica_update')?.addEventListener('click', () =>
+      verificaServereUpdate({
+        testTbodyId: 'server-tbody-deploy-test',
+        prodTbodyId: 'server-tbody-producție'
+      })
+    );
+  </script>
+  <script type="module">
+    import { trimiteActiune } from '/static/script.js';
+
+    document.getElementById('btn_test')?.addEventListener('click', () => trimiteActiune('test'));
+    document.getElementById('btn_update')?.addEventListener('click', () => trimiteActiune('update'));
+    document.getElementById('btn_debug_zipuri')?.addEventListener('click', () => trimiteActiune('debug_zipuri'));
+    document.getElementById('btn_rollback')?.addEventListener('click', () => trimiteActiune('rollback'));
+  </script>
+</body>
+</html>
