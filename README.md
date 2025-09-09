@@ -1,4 +1,4 @@
-# RSR Update
+# Application Update
 
 ## Overview
 RSR Update is a **web-based tool** for managing and deploying update packages across multiple servers.  
